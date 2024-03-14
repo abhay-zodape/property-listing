@@ -1,0 +1,11 @@
+.comingSoon {
+  height: 100%;
+
+  .image {
+    width: 70%;
+    margin: 0 auto;
+    height: 100%;
+    background: url("../../../public/assets/images/loading-bg.png") center/cover
+      no-repeat;
+  }
+}

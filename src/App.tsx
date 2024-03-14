@@ -6,6 +6,7 @@ import AddListing from "./pages/AddListing/AddListing";
 import Listing from "./pages/Listing/Listing";
 import SignIn from "./pages/SignIn/SignIn";
 import UserContextHOC from "./context/User/UserContext";
+import NotFound from "./pages/NotFound/NotFound";
 
 function App() {
   const routes = createBrowserRouter([
@@ -28,6 +29,10 @@ function App() {
     {
       path: "/sign-in",
       element: <SignIn />,
+    },
+    {
+      path: "*",
+      element: <NotFound />,
     },
   ]);
 
