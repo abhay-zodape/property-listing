@@ -1,0 +1,30 @@
+.inputWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  .label {
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .inputContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+
+    .input {
+      outline: none;
+      width: 100%;
+      border: 1px solid #d3d3d3;
+      padding: 0.5rem 0.75rem;
+    }
+
+    .error {
+      min-height: 0.75rem;
+      line-height: 0.75rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+  }
+}

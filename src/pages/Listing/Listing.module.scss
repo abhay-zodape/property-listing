@@ -1,0 +1,36 @@
+.listingPage {
+  height: 100%;
+  display: flex;
+  padding: 4rem 0;
+
+  .listingWrapper {
+    margin: 0 auto;
+    width: 70vw;
+    display: flex;
+    gap: 1.5rem;
+
+    .listing {
+      flex: 3;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+
+      .allListing {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        flex: 1;
+        overflow: auto;
+
+        &::-webkit-scrollbar {
+          display: none;
+        }
+      }
+    }
+
+    .contactWrapper {
+      flex: 1;
+    }
+  }
+}

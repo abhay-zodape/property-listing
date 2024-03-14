@@ -1,0 +1,54 @@
+.addListingWrapper {
+  height: 100%;
+  max-width: 60vw;
+  margin: 0 auto;
+
+  display: flex;
+  align-items: center;
+
+  .addListingMain {
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    width: 100%;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    .header {
+      font-weight: 700;
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+
+      .infoIcon {
+        height: 1.5rem;
+      }
+    }
+
+    .addListingForm {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+
+      .row {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+
+        .input {
+          flex: 1;
+
+          .picture {
+            padding: 0.25rem;
+            color: white;
+            background-color: #1f88b1;
+
+            &.main {
+              background-color: #1fb141;
+            }
+          }
+        }
+      }
+    }
+  }
+}

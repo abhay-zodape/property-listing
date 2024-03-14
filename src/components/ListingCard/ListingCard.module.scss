@@ -1,0 +1,75 @@
+.listingCard {
+  display: flex;
+  border-radius: 1rem;
+  border: 1px solid #d3d3d3;
+  border-left: none;
+
+  .image {
+    height: 23rem;
+    flex: 1;
+    border-top-left-radius: 1rem;
+    border-bottom-left-radius: 1rem;
+    overflow: hidden;
+
+    img {
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+
+  .details {
+    flex: 2;
+    padding: 1rem 2rem;
+
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    .priceDetails {
+      .startsFrom {
+        color: #b2aeae;
+        font-weight: 700;
+      }
+
+      .price {
+        color: #1fb141;
+        font-size: 1.25rem;
+        font-weight: 900;
+      }
+    }
+
+    .description {
+      color: #a6a3a3;
+    }
+
+    .sizeDetails {
+      display: flex;
+      gap: 2rem;
+      padding: 0 1rem;
+      font-weight: 600;
+      color: #8a8989;
+
+      .size {
+        border-right: 1px solid #d3d3d3;
+        padding-right: 1rem;
+
+        &:last-child {
+          border-right: none;
+        }
+      }
+    }
+
+    .seeDetails {
+      .seeDetailsButton {
+        padding: 0.75rem 1rem;
+        border: 1px solid #d3d3d3;
+        outline: none;
+        background-color: white;
+        color: #a6a3a3;
+        font-weight: 700;
+        font-size: 1.125rem;
+        cursor: pointer;
+      }
+    }
+  }
+}

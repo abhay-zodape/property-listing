@@ -1,0 +1,24 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 4rem;
+  background-color: white;
+  line-height: 4rem;
+  padding: 1rem;
+  border-bottom: 1px solid #d3d3d3;
+  .logo {
+    font-weight: 700;
+  }
+
+  .navbar {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+
+    .navItem {
+      font-weight: 600;
+      cursor: pointer;
+    }
+  }
+}
