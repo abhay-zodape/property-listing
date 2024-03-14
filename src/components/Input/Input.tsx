@@ -14,7 +14,11 @@ const Input = forwardRef<HTMLInputElement, IInputProps>(
         <div className={styles.inputContainer}>
           <input
             {...props}
-            className={[styles.input, props.className].join(" ")}
+            className={[
+              styles.input,
+              props.className,
+              showError && error ? styles.inputError : "",
+            ].join(" ")}
             ref={ref}
           />
 

@@ -4,6 +4,8 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import AddListing from "./pages/AddListing/AddListing";
 import Listing from "./pages/Listing/Listing";
+import SignIn from "./pages/SignIn/SignIn";
+import UserContextHOC from "./context/User/UserContext";
 
 function App() {
   const routes = createBrowserRouter([
@@ -23,9 +25,17 @@ function App() {
       path: "/listing",
       element: <Listing />,
     },
+    {
+      path: "/sign-in",
+      element: <SignIn />,
+    },
   ]);
 
-  return <RouterProvider router={routes} />;
+  return (
+    <UserContextHOC>
+      <RouterProvider router={routes} />
+    </UserContextHOC>
+  );
 }
 
 export default App;
