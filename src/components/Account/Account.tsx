@@ -1,26 +1,24 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { signOut } from "firebase/auth";
 import styles from "./Account.module.scss";
-import { UserContext } from "../../context/User/UserContext";
-import { IUserContext } from "../../context/User/UserContext.type";
 import { getInitials } from "../../utils/utils";
 import Button from "../Button/Button";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../../firebase";
 
 const Account = () => {
   const [showAccountDetails, setShowAccountDetails] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
+  const [user] = useAuthState(auth);
+
   const toggleAccountaDetails = () => {
     setShowAccountDetails((prev) => !prev);
   };
 
-  const {
-    userState: { name },
-    userDispatch,
-  } = useContext(UserContext) as IUserContext;
-
   const handleSignout = () => {
-    userDispatch({ type: "sign-out", payload: {} });
     toggleAccountaDetails();
+    signOut(auth);
   };
 
   useEffect(() => {
@@ -41,10 +39,16 @@ const Account = () => {
 
   return (
     <div className={styles.profile}>
-      <div onClick={toggleAccountaDetails}>{getInitials(name)}</div>
+      <div onClick={toggleAccountaDetails}>
+        {user?.photoURL ? (
+          <img src={user?.photoURL} alt={user?.displayName || ""} />
+        ) : (
+          getInitials(user?.displayName ?? "")
+        )}
+      </div>
       {showAccountDetails && (
         <div className={styles.account} ref={ref}>
-          <div>{name}</div>
+          <div>{user?.displayName || "User"}</div>
           <Button onClick={handleSignout}>Sign out</Button>
         </div>
       )}

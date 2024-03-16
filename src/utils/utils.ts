@@ -3,5 +3,5 @@ export const getInitials = (name: string) => {
 
   const initials = words.map((word) => word.charAt(0).toUpperCase());
 
-  return initials.join("");
+  return initials.join("") || "👨🏻‍💼";
 };

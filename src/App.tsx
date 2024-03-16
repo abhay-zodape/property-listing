@@ -4,9 +4,9 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import AddListing from "./pages/AddListing/AddListing";
 import Listing from "./pages/Listing/Listing";
-import SignIn from "./pages/SignIn/SignIn";
 import UserContextHOC from "./context/User/UserContext";
 import NotFound from "./pages/NotFound/NotFound";
+import Auth from "./pages/Auth/Auth";
 
 function App() {
   const routes = createBrowserRouter([
@@ -28,7 +28,7 @@ function App() {
     },
     {
       path: "/sign-in",
-      element: <SignIn />,
+      element: <Auth />,
     },
     {
       path: "*",

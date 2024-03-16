@@ -6,4 +6,9 @@
   cursor: pointer;
   font-weight: 600;
   text-align: center;
+
+  &:disabled {
+    pointer-events: none;
+    opacity: 0.5;
+  }
 }

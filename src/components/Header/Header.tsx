@@ -5,13 +5,12 @@ import Button from "../Button/Button";
 import { useContext } from "react";
 import { UserContext } from "../../context/User/UserContext";
 import { IUserContext } from "../../context/User/UserContext.type";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../../firebase";
 
 const Header = () => {
   const navigate = useNavigate();
-
-  const {
-    userState: { isLoggedIn },
-  } = useContext(UserContext) as IUserContext;
+  const [user] = useAuthState(auth);
 
   const handleNavigate = (path: string) => {
     if (path) {
@@ -23,7 +22,7 @@ const Header = () => {
     <header className={styles.header}>
       <div className={styles.logo}> Renvest </div>
       <nav className={styles.navbar}>
-        {GET_NAVIGATION_ITEMS(isLoggedIn).map(({ title, path }, index) => (
+        {GET_NAVIGATION_ITEMS(Boolean(user)).map(({ title, path }, index) => (
           <div
             className={styles.navItem}
             key={index}
@@ -34,9 +33,11 @@ const Header = () => {
         ))}
       </nav>
       <div className={styles.addListing}>
-        <Button onClick={() => handleNavigate("/add-listing")}>
-          + Add Listing
-        </Button>
+        {user && (
+          <Button onClick={() => handleNavigate("/add-listing")}>
+            + Add Listing
+          </Button>
+        )}
       </div>
     </header>
   );

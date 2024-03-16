@@ -1,0 +1,29 @@
+.signUpForm {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  .input {
+    flex: 1;
+
+    .signUpTextWrapper {
+      text-align: right;
+      font-size: 0.75rem;
+      line-height: 0.875rem;
+
+      .signUpText {
+        color: #0c6e23;
+        font-weight: 700;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .submitButton {
+    .submit {
+      width: 100%;
+      padding: 0;
+      line-height: 2.125rem;
+    }
+  }
+}
