@@ -1,9 +1,7 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./Auth.module.scss";
 import WithHeader from "../../hoc/WithHeader/WithHeader";
-import { UserContext } from "../../context/User/UserContext";
-import { IUserContext } from "../../context/User/UserContext.type";
 import SignInForm from "./SignInForm/SignInForm";
 import SignUpForm from "./SignUpForm/SignUpForm";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -27,7 +25,13 @@ const Auth = () => {
       <div className={styles.signInPage}>
         <div className={styles.signInMain}>
           <header className={styles.header}>
-            {showSignUp && <img src="/assets/images/back.png" alt="back" />}{" "}
+            {showSignUp && (
+              <img
+                src="/assets/images/back.png"
+                alt="back"
+                onClick={() => setShowSignUp(false)}
+              />
+            )}{" "}
             <h2>{showSignUp ? "Sign Up" : "Sign In"}</h2>
           </header>
           <main className={styles.main}>
