@@ -11,6 +11,7 @@ import { auth } from "../../../firebase";
 import styles from "./SignInForm.module.scss";
 import { ISignInForm, ISignInFormProps } from "./SignInForm.type";
 import { signInSchema } from "./constants";
+import { toast } from "react-toastify";
 
 const SignInForm = ({ handleSignUpNavigate }: ISignInFormProps) => {
   const {
@@ -36,6 +37,7 @@ const SignInForm = ({ handleSignUpNavigate }: ISignInFormProps) => {
 
   const onSubmit = async ({ email, password }: ISignInForm) => {
     signInWithEmailAndPassword(email, password);
+    toast.success("Sign in successfull");
   };
 
   const handleGoogleLogin = () => {
@@ -48,7 +50,7 @@ const SignInForm = ({ handleSignUpNavigate }: ISignInFormProps) => {
         message: " ",
       });
       setError("password", {
-        message: error?.message,
+        message: "Enter valod credentials",
       });
     }
   }, [error]);

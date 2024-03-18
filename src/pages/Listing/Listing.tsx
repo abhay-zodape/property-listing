@@ -4,42 +4,34 @@ import styles from "./Listing.module.scss";
 import ListingCard from "../../components/ListingCard/ListingCard";
 import Filter from "./Filter/Filter";
 import { fireStore } from "../../firebase/clientApp";
-import {
-  CollectionReference,
-  DocumentData,
-  QueryConstraint,
-  collection,
-  getDocs,
-  query,
-  where,
-} from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import { IListingData } from "../../components/ListingCard/ListingCard.type";
 import Loader from "../../components/Loader/Loader";
 import { IFilterForm } from "./Filter/Filter.type";
+import { toast } from "react-toastify";
 
 const Listing = () => {
   const [propertyListings, setPropertyListings] = useState<IListingData[]>([]);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    const fetchPropertyListings = async () => {
-      setLoading(true);
-      try {
-        const listingsRef = collection(fireStore, "propertyListings");
-        const snapshot = await getDocs(listingsRef);
-        const listingsData = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        })) as IListingData[];
-        setPropertyListings(listingsData);
-        console.log(listingsData);
-        setLoading(false);
-      } catch (error) {
-        setLoading(false);
-        console.error("Error fetching property listings: ", error);
-      }
-    };
+  const fetchPropertyListings = async () => {
+    setLoading(true);
+    try {
+      const listingsRef = collection(fireStore, "propertyListings");
+      const snapshot = await getDocs(listingsRef);
+      const listingsData = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      })) as IListingData[];
+      setPropertyListings(listingsData);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      toast.error("Error fetching property listings");
+    }
+  };
 
+  useEffect(() => {
     fetchPropertyListings();
   }, []);
 
@@ -91,7 +83,7 @@ const Listing = () => {
       setLoading(false);
     } catch (error) {
       setLoading(false);
-      console.error("Error applying filters: ", error);
+      toast.error("Error applying filters");
     }
   };
 
@@ -116,7 +108,10 @@ const Listing = () => {
             </main>
           </div>
           <div className={styles.actionsWrapper}>
-            <Filter handleApply={applyFilters} handleReset={() => {}} />
+            <Filter
+              handleApply={applyFilters}
+              handleReset={fetchPropertyListings}
+            />
           </div>
         </div>
       </div>

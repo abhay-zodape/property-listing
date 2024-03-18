@@ -1,9 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect } from "react";
-import {
-  useCreateUserWithEmailAndPassword,
-  useSignInWithGoogle,
-} from "react-firebase-hooks/auth";
+import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
 import Button from "../../../components/Button/Button";
 import Input from "../../../components/Input/Input";
@@ -11,6 +8,7 @@ import { auth } from "../../../firebase";
 import styles from "./SignUpForm.module.scss";
 import { ISignUpForm } from "./SignUpForm.type";
 import { signUpSchema } from "./constants";
+import { toast } from "react-toastify";
 
 const SignUpForm = () => {
   const {
@@ -34,6 +32,7 @@ const SignUpForm = () => {
 
   const onSubmit = async ({ email, password }: ISignUpForm) => {
     signUpWithEmailAndPassword(email, password);
+    toast.success("User signed up successfully");
   };
 
   useEffect(() => {
@@ -45,7 +44,7 @@ const SignUpForm = () => {
         message: " ",
       });
       setError("confirmPassword", {
-        message: error?.message,
+        message: "Enter valid credentials",
       });
     }
   }, [error]);

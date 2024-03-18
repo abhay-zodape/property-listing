@@ -5,6 +5,7 @@ import { getInitials } from "../../utils/utils";
 import Button from "../Button/Button";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase";
+import { toast } from "react-toastify";
 
 const Account = () => {
   const [showAccountDetails, setShowAccountDetails] = useState(false);
@@ -19,6 +20,7 @@ const Account = () => {
   const handleSignout = () => {
     toggleAccountaDetails();
     signOut(auth);
+    toast.success("User signed out");
   };
 
   useEffect(() => {
