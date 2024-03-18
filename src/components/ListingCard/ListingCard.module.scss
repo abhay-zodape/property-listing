@@ -10,15 +10,30 @@
     border-top-left-radius: 1rem;
     border-bottom-left-radius: 1rem;
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    position: relative;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      filter: blur(10px);
+      background-color: #ebeaea;
+    }
 
     img {
       height: 100%;
       object-fit: contain;
+      width: 100%;
     }
   }
 
   .details {
-    flex: 2;
+    flex: 1;
     padding: 1rem 2rem;
 
     display: flex;
@@ -61,12 +76,13 @@
 
     .seeDetails {
       .seeDetailsButton {
-        padding: 0.75rem 1rem;
+        letter-spacing: 2px;
+        padding: 0.5rem 0.75rem;
         border: 1px solid #d3d3d3;
         outline: none;
         background-color: white;
         color: #a6a3a3;
-        font-weight: 700;
+        font-weight: 600;
         font-size: 1.125rem;
         cursor: pointer;
       }

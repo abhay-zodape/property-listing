@@ -1,29 +1,42 @@
 import React from "react";
 import styles from "./ListingCard.module.scss";
 import { IListingCardProps } from "./ListingCard.type";
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { FALSE } from "sass";
 
 const ListingCard = ({ data }: IListingCardProps) => {
   return (
     <div className={styles.listingCard}>
       <div className={styles.image}>
-        <img src={data?.imgUrl} alt={data?.name} />
+        <Carousel infiniteLoop showThumbs={false} autoPlay>
+          {data?.images?.map((imgUrl) => (
+            <img key={imgUrl} src={imgUrl} alt={data?.propertyTitle} />
+          ))}
+        </Carousel>
       </div>
       <div className={styles.details}>
-        <h2>{data?.name}</h2>
+        <div className={styles.header}>
+          <h2>{data?.propertyTitle}</h2>
+          <p>Distance from MIT - {data?.distance} km</p>
+        </div>
         <div className={styles.priceDetails}>
-          <p className={styles.startsFrom}>Starts From</p>
+          <p className={styles.startsFrom}>Monthly Rent</p>
           <p className={styles.price}>Rs. {data?.price}</p>
         </div>
         <div className={styles.description}>
           <p>{data?.description}</p>
         </div>
-        <div className={styles.sizeDetails}>
-          <div className={styles.size}>{data?.beds} beds</div>
-          <div className={styles.size}>{data?.baths} baths</div>
-          <div className={styles.size}>{data?.sqft} sqft.</div>
+        <div className={styles.description}>
+          <h4>Address</h4>
+          <p>
+            {data?.address}, {data?.location}
+          </p>
         </div>
         <div className={styles.seeDetails}>
-          <button className={styles.seeDetailsButton}>See Details</button>
+          <button className={styles.seeDetailsButton}>
+            {data?.propertyType}
+          </button>
         </div>
       </div>
     </div>

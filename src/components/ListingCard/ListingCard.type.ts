@@ -1,14 +1,15 @@
 export interface IListingCardProps {
-  data: IListingCard;
+  data: IListingData;
 }
 
-export interface IListingCard {
+export interface IListingData {
   id: string;
-  name: string;
-  price: string;
+  propertyTitle: string;
+  address: string;
+  location: string;
+  price: number;
+  distance: number;
+  propertyType: string;
   description: string;
-  imgUrl: string;
-  beds: number;
-  baths: number;
-  sqft: number;
+  images: string[];
 }

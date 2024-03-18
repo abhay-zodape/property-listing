@@ -1,7 +1,7 @@
 .listingPage {
   height: 100%;
   display: flex;
-  padding: 4rem 0;
+  padding: 3rem 0 2rem 0;
 
   .listingWrapper {
     margin: 0 auto;
@@ -39,6 +39,16 @@
 
         &::-webkit-scrollbar {
           display: none;
+        }
+
+        .noDataFound {
+          display: flex;
+          justify-content: center;
+          max-height: 50vh;
+
+          img {
+            height: 100%;
+          }
         }
       }
     }

@@ -53,8 +53,6 @@ const SignInForm = ({ handleSignUpNavigate }: ISignInFormProps) => {
     }
   }, [error]);
 
-  console.log(error?.message, ">>");
-
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)} className={styles.signInForm}>

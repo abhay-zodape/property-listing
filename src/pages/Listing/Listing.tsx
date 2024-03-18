@@ -1,12 +1,100 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import WithHeader from "../../hoc/WithHeader/WithHeader";
 import styles from "./Listing.module.scss";
-import { LISTING_CARD_DETAILS } from "./constants";
 import ListingCard from "../../components/ListingCard/ListingCard";
-import Input from "../../components/Input/Input";
 import Filter from "./Filter/Filter";
+import { fireStore } from "../../firebase/clientApp";
+import {
+  CollectionReference,
+  DocumentData,
+  QueryConstraint,
+  collection,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
+import { IListingData } from "../../components/ListingCard/ListingCard.type";
+import Loader from "../../components/Loader/Loader";
+import { IFilterForm } from "./Filter/Filter.type";
 
 const Listing = () => {
+  const [propertyListings, setPropertyListings] = useState<IListingData[]>([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchPropertyListings = async () => {
+      setLoading(true);
+      try {
+        const listingsRef = collection(fireStore, "propertyListings");
+        const snapshot = await getDocs(listingsRef);
+        const listingsData = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        })) as IListingData[];
+        setPropertyListings(listingsData);
+        console.log(listingsData);
+        setLoading(false);
+      } catch (error) {
+        setLoading(false);
+        console.error("Error fetching property listings: ", error);
+      }
+    };
+
+    fetchPropertyListings();
+  }, []);
+
+  const applyFilters = async (filters: IFilterForm) => {
+    setLoading(true);
+    try {
+      let filteredQuery: any = collection(fireStore, "propertyListings");
+
+      if (filters.propertyType && filters.propertyType.length > 0) {
+        filteredQuery = query(
+          filteredQuery,
+          where("propertyType", "in", filters.propertyType)
+        );
+      }
+
+      // Apply price filter
+      if (filters.price && filters.price.min && filters.price.max) {
+        filteredQuery = query(
+          filteredQuery,
+          where("price", ">=", Number(filters.price.min))
+        );
+        filteredQuery = query(
+          filteredQuery,
+          where("price", "<=", Number(filters.price.max))
+        );
+      }
+
+      // Apply location filter
+      if (filters.location && filters.location.length > 0) {
+        filteredQuery = query(
+          filteredQuery,
+          where("location", "in", filters.location)
+        );
+      }
+      // Execute the query
+      const snapshot = await getDocs(filteredQuery);
+
+      // Process the results
+      let listingsData = snapshot.docs.map((doc: any) => ({
+        id: doc.id,
+        ...doc.data(),
+      })) as IListingData[];
+      if (filters?.distance) {
+        listingsData = listingsData?.filter(
+          (list) => list?.distance <= Number(filters?.distance)
+        );
+      }
+      setPropertyListings(listingsData);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      console.error("Error applying filters: ", error);
+    }
+  };
+
   return (
     <WithHeader>
       <div className={styles.listingPage}>
@@ -14,24 +102,25 @@ const Listing = () => {
           <div className={styles.listing}>
             <header className={styles.header}>
               <h1>Listing</h1>
-              <div className={styles.search}>
-                <Input
-                  placeholder="Search by area"
-                  className={styles.searchInput}
-                />
-              </div>
             </header>
             <main className={styles.allListing}>
-              {LISTING_CARD_DETAILS?.map((listing, index) => (
-                <ListingCard data={listing} key={index} />
-              ))}
+              {propertyListings?.length > 0 ? (
+                propertyListings.map((listing: IListingData) => (
+                  <ListingCard data={listing} key={listing.id} />
+                ))
+              ) : (
+                <div className={styles.noDataFound}>
+                  <img src="/assets/images/no-data.svg" alt="no-data" />
+                </div>
+              )}
             </main>
           </div>
           <div className={styles.actionsWrapper}>
-            <Filter />
+            <Filter handleApply={applyFilters} handleReset={() => {}} />
           </div>
         </div>
       </div>
+      <Loader show={loading} />
     </WithHeader>
   );
 };

@@ -1,12 +1,15 @@
 import React from "react";
 import styles from "./Filter.module.scss";
-import { PROPERTY_TYPE_OPTIONS } from "../../AddListing/constants";
+import {
+  LOCATION_OPTIONS,
+  PROPERTY_TYPE_OPTIONS,
+} from "../../AddListing/constants";
 import Input from "../../../components/Input/Input";
 import Button from "../../../components/Button/Button";
 import { useForm } from "react-hook-form";
-import { IFilterForm } from "./Filter.type";
+import { IFilterForm, IFilterChangeType, IFilterProps } from "./Filter.type";
 
-const Filter = () => {
+const Filter = ({ handleApply, handleReset }: IFilterProps) => {
   const { watch, setValue, handleSubmit, register, reset } =
     useForm<IFilterForm>({
       defaultValues: {
@@ -15,30 +18,33 @@ const Filter = () => {
           min: "",
           max: "",
         },
-        area: "",
+        location: [],
+        distance: "",
       },
     });
 
   const onSubmit = (values: IFilterForm) => {
-    console.log(values);
+    handleApply(values);
   };
 
-  const handlePropertyTypeChange = (
-    event: React.ChangeEvent<HTMLInputElement>
+  const handleCheckboxChange = (
+    event: React.FormEvent<HTMLInputElement>,
+    name: IFilterChangeType
   ) => {
     const { checked, value } = event?.currentTarget;
 
     if (checked) {
-      setValue("propertyType", [...watch("propertyType"), value]);
+      setValue(name, [...watch(name), value]);
     } else
       setValue(
-        "propertyType",
-        watch("propertyType")?.filter((id) => id !== value)
+        name,
+        watch(name)?.filter((id) => id !== value)
       );
   };
 
   const handleClear = () => {
     reset();
+    handleReset();
   };
 
   return (
@@ -59,7 +65,9 @@ const Filter = () => {
                         type="checkbox"
                         value={value}
                         checked={watch("propertyType").includes(value)}
-                        onChange={handlePropertyTypeChange}
+                        onChange={(event) =>
+                          handleCheckboxChange(event, "propertyType")
+                        }
                       />
                       <label>{label}</label>
                     </div>
@@ -72,17 +80,37 @@ const Filter = () => {
               <div className={styles.priceRange}>
                 <Input isNumber placeholder="min" {...register("price.min")} />{" "}
                 <span>-</span>{" "}
-                <Input isNumber placeholder="max" {...register("price.min")} />
+                <Input isNumber placeholder="max" {...register("price.max")} />
               </div>
             </div>
             <div className={styles.optionWrapper}>
-              <h4>Area (sqft.)</h4>
+              <h4>Distance (km)</h4>
               <div className={styles.options}>
                 <Input
                   isNumber
-                  placeholder="Enter area in sqft"
-                  {...register("area")}
+                  placeholder="Enter distance from MIT"
+                  {...register("distance")}
                 />
+              </div>
+            </div>
+            <div className={styles.optionWrapper}>
+              <h4>Location </h4>
+              <div className={styles.priceRange}>
+                {LOCATION_OPTIONS?.map(({ value, label }, index) => {
+                  return (
+                    <div className={styles.input} key={`${label}-${index}`}>
+                      <Input
+                        value={value}
+                        type="checkbox"
+                        checked={watch("location")?.includes(value)}
+                        onChange={(event) =>
+                          handleCheckboxChange(event, "location")
+                        }
+                      />
+                      <label>{label}</label>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>

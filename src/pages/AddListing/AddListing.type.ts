@@ -1,11 +1,9 @@
 export interface IAddListingForm {
   propertyTitle: string;
   address: string;
-  state: string;
-  city: string;
-  pincode: string;
+  location: string;
+  distance: string;
   propertyType: string;
-  propertyStatus: string;
   price: string;
   description: string;
   mainPicture: any;

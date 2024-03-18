@@ -4,9 +4,10 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import AddListing from "./pages/AddListing/AddListing";
 import Listing from "./pages/Listing/Listing";
-import UserContextHOC from "./context/User/UserContext";
 import NotFound from "./pages/NotFound/NotFound";
 import Auth from "./pages/Auth/Auth";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const routes = createBrowserRouter([
@@ -37,9 +38,10 @@ function App() {
   ]);
 
   return (
-    <UserContextHOC>
+    <>
+      <ToastContainer position="top-center" hideProgressBar autoClose={2000} />
       <RouterProvider router={routes} />
-    </UserContextHOC>
+    </>
   );
 }
 
